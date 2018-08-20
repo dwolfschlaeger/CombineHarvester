@@ -216,52 +216,52 @@ namespace ch {
         
         // recoil uncertainties need to be split by njets. W effectivly has njets+1 (due to tau/electron from fake jet)
         
-        cb.cp().process(JoinStr({sig_procs, {"ZTT","ZLL","ZL","ZJ","EWKZ"}})).channel({"et","mt","em"}).bin_id({1,10,11,12}).AddSyst(cb,
-                                                  "CMS_htt_boson_reso_met_0Jet_$ERA", "shape", SystMap<>::init(1.00));
-        cb.cp().process(JoinStr({sig_procs, {"ZTT","ZLL","ZL","ZJ","EWKZ"}})).channel({"tt"}).bin_id({1,10}).AddSyst(cb,
-                                                  "CMS_htt_boson_reso_met_0Jet_$ERA", "shape", SystMap<>::init(1.00));
-        cb.cp().process(JoinStr({sig_procs, {"ZTT","ZLL","ZL","ZJ","EWKZ"}})).channel({"et","mt","em"}).bin_id({1,10,11,12}).AddSyst(cb,
-                                                  "CMS_htt_boson_scale_met_0Jet_$ERA", "shape", SystMap<>::init(1.00));
-        cb.cp().process(JoinStr({sig_procs, {"ZTT","ZLL","ZL","ZJ","EWKZ"}})).channel({"tt"}).bin_id({1,10}).AddSyst(cb,
-                                                  "CMS_htt_boson_scale_met_0Jet_$ERA", "shape", SystMap<>::init(1.00));
+       // cb.cp().process(JoinStr({sig_procs, {"ZTT","ZLL","ZL","ZJ","EWKZ"}})).channel({"et","mt","em"}).bin_id({1,10,11,12}).AddSyst(cb,
+        //                                          "CMS_htt_boson_reso_met_0Jet_$ERA", "shape", SystMap<>::init(1.00));
+       // cb.cp().process(JoinStr({sig_procs, {"ZTT","ZLL","ZL","ZJ","EWKZ"}})).channel({"tt"}).bin_id({1,10}).AddSyst(cb,
+          //                                        "CMS_htt_boson_reso_met_0Jet_$ERA", "shape", SystMap<>::init(1.00));
+       // cb.cp().process(JoinStr({sig_procs, {"ZTT","ZLL","ZL","ZJ","EWKZ"}})).channel({"et","mt","em"}).bin_id({1,10,11,12}).AddSyst(cb,
+          //                                        "CMS_htt_boson_scale_met_0Jet_$ERA", "shape", SystMap<>::init(1.00));
+       // cb.cp().process(JoinStr({sig_procs, {"ZTT","ZLL","ZL","ZJ","EWKZ"}})).channel({"tt"}).bin_id({1,10}).AddSyst(cb,
+         //                                         "CMS_htt_boson_scale_met_0Jet_$ERA", "shape", SystMap<>::init(1.00));
         
-        cb.cp().process(JoinStr({sig_procs, {"ZTT","ZLL","ZL","ZJ","EWKZ"}})).channel({"et","mt","em"}).bin_id({2,13,14,15}).AddSyst(cb,
-                                                  "CMS_htt_boson_reso_met_1Jet_$ERA", "shape", SystMap<>::init(1.00));
-        cb.cp().process({"W"}).channel({"et","mt","em"}).bin_id({1,10,11,12}).AddSyst(cb,
-                                                  "CMS_htt_boson_reso_met_1Jet_$ERA", "shape", SystMap<>::init(1.00));
-        cb.cp().process(JoinStr({sig_procs, {"ZTT","ZLL","ZL","ZJ","EWKZ"}})).channel({"tt"}).bin_id({2,11}).AddSyst(cb,
-                                                  "CMS_htt_boson_reso_met_1Jet_$ERA", "shape", SystMap<>::init(1.00));
-        cb.cp().process({"W"}).channel({"tt"}).bin_id({1,10}).AddSyst(cb,
-                                                  "CMS_htt_boson_reso_met_1Jet_$ERA", "shape", SystMap<>::init(1.00));
-        cb.cp().process(JoinStr({sig_procs, {"ZTT","ZLL","ZL","ZJ","EWKZ"}})).channel({"et","mt","em"}).bin_id({2,13,14,15}).AddSyst(cb,
-                                                  "CMS_htt_boson_scale_met_1Jet_$ERA", "shape", SystMap<>::init(1.00));
-        cb.cp().process({"W"}).channel({"et","mt","em"}).bin_id({1,10,11,12}).AddSyst(cb,
-                                                  "CMS_htt_boson_scale_met_1Jet_$ERA", "shape", SystMap<>::init(1.00));
-        cb.cp().process(JoinStr({sig_procs, {"ZTT","ZLL","ZL","ZJ","EWKZ"}})).channel({"tt"}).bin_id({2,11}).AddSyst(cb,
-                                                  "CMS_htt_boson_scale_met_1Jet_$ERA", "shape", SystMap<>::init(1.00));
-        cb.cp().process({"W"}).channel({"tt"}).bin_id({1,10}).AddSyst(cb,
-                                                  "CMS_htt_boson_scale_met_1Jet_$ERA", "shape", SystMap<>::init(1.00));
+       // cb.cp().process(JoinStr({sig_procs, {"ZTT","ZLL","ZL","ZJ","EWKZ"}})).channel({"et","mt","em"}).bin_id({2,13,14,15}).AddSyst(cb,
+        //                                          "CMS_htt_boson_reso_met_1Jet_$ERA", "shape", SystMap<>::init(1.00));
+        //cb.cp().process({"W"}).channel({"et","mt","em"}).bin_id({1,10,11,12}).AddSyst(cb,
+        //                                          "CMS_htt_boson_reso_met_1Jet_$ERA", "shape", SystMap<>::init(1.00));
+       // cb.cp().process(JoinStr({sig_procs, {"ZTT","ZLL","ZL","ZJ","EWKZ"}})).channel({"tt"}).bin_id({2,11}).AddSyst(cb,
+       //                                           "CMS_htt_boson_reso_met_1Jet_$ERA", "shape", SystMap<>::init(1.00));
+       // cb.cp().process({"W"}).channel({"tt"}).bin_id({1,10}).AddSyst(cb,
+       //                                           "CMS_htt_boson_reso_met_1Jet_$ERA", "shape", SystMap<>::init(1.00));
+       // cb.cp().process(JoinStr({sig_procs, {"ZTT","ZLL","ZL","ZJ","EWKZ"}})).channel({"et","mt","em"}).bin_id({2,13,14,15}).AddSyst(cb,
+       //                                           "CMS_htt_boson_scale_met_1Jet_$ERA", "shape", SystMap<>::init(1.00));
+       // cb.cp().process({"W"}).channel({"et","mt","em"}).bin_id({1,10,11,12}).AddSyst(cb,
+       //                                           "CMS_htt_boson_scale_met_1Jet_$ERA", "shape", SystMap<>::init(1.00));
+       // cb.cp().process(JoinStr({sig_procs, {"ZTT","ZLL","ZL","ZJ","EWKZ"}})).channel({"tt"}).bin_id({2,11}).AddSyst(cb,
+       //                                           "CMS_htt_boson_scale_met_1Jet_$ERA", "shape", SystMap<>::init(1.00));
+       // cb.cp().process({"W"}).channel({"tt"}).bin_id({1,10}).AddSyst(cb,
+       //                                           "CMS_htt_boson_scale_met_1Jet_$ERA", "shape", SystMap<>::init(1.00));
         
-        cb.cp().process(JoinStr({sig_procs, {"W","ZTT","ZLL","ZL","ZJ","EWKZ"}})).channel({"et","mt","em"}).bin_id({2,13,14,15,3,4,16,17,18,20}).AddSyst(cb,
-                                                  "CMS_htt_boson_reso_met_2Jet_$ERA", "shape", SystMap<>::init(1.00));
-        cb.cp().process(JoinStr({sig_procs, {"W","ZTT","ZLL","ZL","ZJ","EWKZ"}})).channel({"tt"}).bin_id({2,11,3,4,12,13}).AddSyst(cb,
-                                                  "CMS_htt_boson_reso_met_2Jet_$ERA", "shape", SystMap<>::init(1.00));
-        cb.cp().process(JoinStr({sig_procs, {"W","ZTT","ZLL","ZL","ZJ","EWKZ"}})).channel({"et","mt","em"}).bin_id({2,13,14,15,3,4,16,17,18,20}).AddSyst(cb,
-                                                  "CMS_htt_boson_scale_met_2Jet_$ERA", "shape", SystMap<>::init(1.00));
-        cb.cp().process(JoinStr({sig_procs, {"W","ZTT","ZLL","ZL","ZJ","EWKZ"}})).channel({"tt"}).bin_id({2,11,3,4,12,13}).AddSyst(cb,
-                                                  "CMS_htt_boson_scale_met_2Jet_$ERA", "shape", SystMap<>::init(1.00));
+       // cb.cp().process(JoinStr({sig_procs, {"W","ZTT","ZLL","ZL","ZJ","EWKZ"}})).channel({"et","mt","em"}).bin_id({2,13,14,15,3,4,16,17,18,20}).AddSyst(cb,
+       //                                           "CMS_htt_boson_reso_met_2Jet_$ERA", "shape", SystMap<>::init(1.00));
+       // cb.cp().process(JoinStr({sig_procs, {"W","ZTT","ZLL","ZL","ZJ","EWKZ"}})).channel({"tt"}).bin_id({2,11,3,4,12,13}).AddSyst(cb,
+       //                                           "CMS_htt_boson_reso_met_2Jet_$ERA", "shape", SystMap<>::init(1.00));
+       // cb.cp().process(JoinStr({sig_procs, {"W","ZTT","ZLL","ZL","ZJ","EWKZ"}})).channel({"et","mt","em"}).bin_id({2,13,14,15,3,4,16,17,18,20}).AddSyst(cb,
+       //                                           "CMS_htt_boson_scale_met_2Jet_$ERA", "shape", SystMap<>::init(1.00));
+       // cb.cp().process(JoinStr({sig_procs, {"W","ZTT","ZLL","ZL","ZJ","EWKZ"}})).channel({"tt"}).bin_id({2,11,3,4,12,13}).AddSyst(cb,
+       //                                          "CMS_htt_boson_scale_met_2Jet_$ERA", "shape", SystMap<>::init(1.00));
 
 
-        if(ttbar_fit){        
-          cb.cp().process(JoinStr({sig_procs, {"W","ZTT","ZLL","ZL","ZJ","EWKZ"}})).channel({"ttbar"}).AddSyst(cb,
-                                                    "CMS_htt_boson_reso_met_1Jet_$ERA", "shape", SystMap<>::init(1.00));
-          cb.cp().process(JoinStr({sig_procs, {"W","ZTT","ZLL","ZL","ZJ","EWKZ"}})).channel({"ttbar"}).AddSyst(cb,
-                                                    "CMS_htt_boson_scale_met_1Jet_$ERA", "shape", SystMap<>::init(1.00));
-          cb.cp().process(JoinStr({sig_procs, {"W","ZTT","ZLL","ZL","ZJ","EWKZ"}})).channel({"ttbar"}).AddSyst(cb,
-                                                    "CMS_htt_boson_reso_met_2Jet_$ERA", "shape", SystMap<>::init(1.00));
-          cb.cp().process(JoinStr({sig_procs, {"W","ZTT","ZLL","ZL","ZJ","EWKZ"}})).channel({"ttbar"}).AddSyst(cb,
-                                                    "CMS_htt_boson_scale_met_2Jet_$ERA", "shape", SystMap<>::init(1.00));
-        }
+       // if(ttbar_fit){        
+       //   cb.cp().process(JoinStr({sig_procs, {"W","ZTT","ZLL","ZL","ZJ","EWKZ"}})).channel({"ttbar"}).AddSyst(cb,
+       //                                             "CMS_htt_boson_reso_met_1Jet_$ERA", "shape", SystMap<>::init(1.00));
+       //   cb.cp().process(JoinStr({sig_procs, {"W","ZTT","ZLL","ZL","ZJ","EWKZ"}})).channel({"ttbar"}).AddSyst(cb,
+       //                                             "CMS_htt_boson_scale_met_1Jet_$ERA", "shape", SystMap<>::init(1.00));
+       //   cb.cp().process(JoinStr({sig_procs, {"W","ZTT","ZLL","ZL","ZJ","EWKZ"}})).channel({"ttbar"}).AddSyst(cb,
+       //                                             "CMS_htt_boson_reso_met_2Jet_$ERA", "shape", SystMap<>::init(1.00));
+       //   cb.cp().process(JoinStr({sig_procs, {"W","ZTT","ZLL","ZL","ZJ","EWKZ"}})).channel({"ttbar"}).AddSyst(cb,
+       //                                             "CMS_htt_boson_scale_met_2Jet_$ERA", "shape", SystMap<>::init(1.00));
+        //}
  
 
         // JES factorization test tautau  

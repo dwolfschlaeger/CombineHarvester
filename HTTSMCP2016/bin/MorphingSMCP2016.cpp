@@ -69,7 +69,7 @@ int main(int argc, char** argv) {
     string postfix="";
     int control_region = 0;
     bool ttbar_fit = false;
-    bool real_data = true;
+    bool real_data = false;
     bool no_shape_systs = false;
     bool do_embedding = false;
     bool auto_rebin = false;
@@ -92,7 +92,7 @@ int main(int argc, char** argv) {
     ("no_shape_systs", po::value<bool>(&no_shape_systs)->default_value(no_shape_systs))
     ("do_embedding", po::value<bool>(&do_embedding)->default_value(false))
     ("do_jetfakes", po::value<bool>(&do_jetfakes)->default_value(false))
-    ("auto_rebin", po::value<bool>(&auto_rebin)->default_value(true))
+    ("auto_rebin", po::value<bool>(&auto_rebin)->default_value(false))
     ("no_jec_split", po::value<bool>(&no_jec_split)->default_value(true))    
     ("ttbar_fit", po::value<bool>(&ttbar_fit)->default_value(true));
 
