@@ -172,14 +172,16 @@ parser.add_argument('--json', help='update this json file')
 parser.add_argument('--model', help='use this model identifier')
 parser.add_argument('--POI', help='use this parameter of interest')
 parser.add_argument('--translate', default=None, help='json file with POI name translation')
-parser.add_argument('--main-label', default='Observed', type=str, help='legend label for the main scan')
-parser.add_argument('--main-color', default=1, type=int, help='line and marker color for main scan')
+parser.add_argument('--main-label', default='Expected', type=str, help='legend label for the main scan')
+parser.add_argument('--main-color', default="#0395DE", help='line and marker color for main scan')
+parser.add_argument('--use-html-colors', action='store_true', help='Use hmtl color codes instead of identifieres')
 parser.add_argument('--relax-safety', default=0, type=int, help='line and marker color for main scan')
 parser.add_argument('--others', nargs='*', help='add secondary scans processed as main: FILE:LABEL:COLOR')
 parser.add_argument('--breakdown', help='do quadratic error subtraction using --others')
 parser.add_argument('--meta', default='', help='Other metadata to save in format KEY:VAL,KEY:VAL')
 parser.add_argument('--logo', default='CMS')
-parser.add_argument('--logo-sub', default='Internal')
+parser.add_argument('--logo-sub', default='Private Work')
+parser.add_argument('--title', default='CP mix. angle #alpha')
 parser.add_argument('--x_title', default=None)
 args = parser.parse_args()
 if args.pub: args.no_input_label = True
@@ -189,18 +191,25 @@ print '--------------------------------------'
 print  args.output
 print '--------------------------------------'
 
-fixed_name = args.POI
+fixed_name = args.POI if args.POI not in "alpha" else "#alpha_{t}"
 if args.translate is not None:
     with open(args.translate) as jsonfile:    
         name_translate = json.load(jsonfile)
     if args.POI in name_translate:
         fixed_name = name_translate[args.POI]
 
+
 yvals = [1., 4.]
 if args.upper_cl is not None:
     yvals = [ROOT.Math.chisquared_quantile(args.upper_cl, 1)]
 
-main_scan = BuildScan(args.output, args.POI, [args.main], args.main_color, yvals, args.chop, args.remove_near_min, args.rezero, remove_delta = args.remove_delta, improve = args.improve)
+if args.use_html_colors:
+    main_color = ROOT.TColor.GetColor("{COLOR}".format(COLOR=args.main_color))
+else:
+    main_color = args.main_color
+
+
+main_scan = BuildScan(args.output, args.POI, [args.main], main_color, yvals, args.chop, args.remove_near_min, args.rezero, remove_delta = args.remove_delta, improve = args.improve)
 
 other_scans = [ ]
 other_scans_opts = [ ]
@@ -230,7 +239,7 @@ main_scan['graph'].SetMarkerColor(1)
 main_scan['graph'].SetLineColor(ROOT.kBlue)
 main_scan['graph'].SetLineStyle(2)
 main_scan['graph'].SetLineWidth(3)
-main_scan['graph'].Draw('APL')
+main_scan['graph'].Draw('AP')
 # main_scan['graph'].Fit('pol4')
 # polfunc = main_scan['graph'].GetFunction('pol4')
 # print 'Function min at %f' % polfunc.GetMinimumX(0.05, 0.25)
@@ -281,7 +290,7 @@ for yval in yvals:
             if cr['valid_hi']: line.DrawLine(cr['hi'], 0, cr['hi'], yval)
 
 main_scan['func'].Draw('same')
-main_scan['graph'].Draw('PLSAME')
+# main_scan['graph'].Draw('PLSAME')
 
 if args.POI == 'alpha':
   import scipy.stats
@@ -290,7 +299,11 @@ if args.POI == 'alpha':
   latex.SetNDC()
   latex.SetTextSize(0.04)
   latex.SetTextAlign(12)
-  latex.DrawLatex(.7,.9,"0^{+} vs 0^{-} = %.2f#sigma" % significance)
+  if args.title is not None:
+      latex.DrawLatex(.7,.9, args.title)
+      latex.DrawLatex(.7,.85," 0^{+} vs 0^{-} =  %.2f#sigma" % (significance))
+  else:
+      latex.DrawLatex(.7,.9,"0^{+} vs 0^{-} = %.2f#sigma" % significance)
 
 
 for other in other_scans:
@@ -329,7 +342,8 @@ pt = ROOT.TPaveText(0.59, 0.82 - len(other_scans)*0.08, 0.95, 0.91, 'NDCNB')
 if args.envelope: pt.SetY2(0.78)
 if args.envelope: pt.SetY1(0.66)
 pt.AddText(textfit)
-
+if args.title is not None:
+    pt.AddText(args.title)
 if args.breakdown is None and args.envelope is False:
     for i, other in enumerate(other_scans):
         textfit = '#color[%s]{%s = %.3f{}^{#plus %.3f}_{#minus %.3f}}' % (other_scans_opts[i][2], fixed_name, other['val'][0], other['val'][1], abs(other['val'][2]))
@@ -485,6 +499,7 @@ plot.DrawCMSLogo(pads[0], args.logo, args.logo_sub, 11, 0.045, 0.035, 1.2,  cmsT
 
 #if not args.no_input_label: plot.DrawTitle(pads[0], '#bf{Input:} %s' % collab, 3)
 plot.DrawTitle(pads[0], '35.9 fb^{-1} (13 TeV)', 3)
+
 #plot.DrawTitle(pads[0], 'm_{H} = 125 GeV', 1)
 
 #info = ROOT.TPaveText(0.59, 0.75, 0.95, 0.91, 'NDCNB')
@@ -533,4 +548,3 @@ if args.meta != '':
         json.dump(meta, outmeta, sort_keys=True, indent=4, separators=(',', ': '))
 
 # canv.Print('.C')
-
