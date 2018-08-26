@@ -74,6 +74,7 @@ int main(int argc, char** argv) {
     bool do_embedding = false;
     bool auto_rebin = false;
     bool no_jec_split = false;    
+    bool use_jec_groupings = false;    
     bool do_jetfakes = false;
     po::variables_map vm;
     po::options_description config("configuration");
@@ -94,6 +95,7 @@ int main(int argc, char** argv) {
     ("do_jetfakes", po::value<bool>(&do_jetfakes)->default_value(false))
     ("auto_rebin", po::value<bool>(&auto_rebin)->default_value(false))
     ("no_jec_split", po::value<bool>(&no_jec_split)->default_value(true))    
+    ("use_jec_groupings", po::value<bool>(&use_jec_groupings)->default_value(false))    
     ("ttbar_fit", po::value<bool>(&ttbar_fit)->default_value(true));
 
     po::store(po::command_line_parser(argc, argv).options(config).run(), vm);
@@ -274,7 +276,7 @@ int main(int argc, char** argv) {
     }
     
     
-    ch::AddSMRun2Systematics(cb, control_region, ttbar_fit, no_jec_split);
+    ch::AddSMRun2Systematics(cb, control_region, ttbar_fit, no_jec_split, use_jec_groupings);
     
     if(no_shape_systs){
       cb.FilterSysts([&](ch::Systematic *s){
