@@ -18,7 +18,7 @@ namespace ch {
     using ch::syst::bin;
     using ch::JoinStr;
     
-    void __attribute__((optimize("O0"))) AddSMRun2Systematics(CombineHarvester & cb, int control_region, bool ttbar_fit, bool no_jec_split) {
+    void __attribute__((optimize("O0"))) AddSMRun2Systematics(CombineHarvester & cb, int control_region, bool ttbar_fit, bool no_jec_split, bool use_jec_groupings) {
         // Create a CombineHarvester clone that only contains the signal
         // categories
         //
@@ -298,34 +298,36 @@ namespace ch {
             }; // end uncertNames
         } else { uncertNames = { "Total" }; }
         
-        //for (string uncert:uncertNames){
-        //    
-        //    cb.cp().process(JoinStr({sig_procs, all_mc_bkgs})).channel({"et"}).bin_id({10,11,14}).AddSyst(cb,
-        //                                                                                        "CMS_scale_j_"+uncert+"_$ERA", "shape", SystMap<>::init(1.00));
-        //
-        //    cb.cp().process(JoinStr({sig_procs, all_mc_bkgs_no_TTJ})).channel({"et"}).bin_id({13}).AddSyst(cb,
-        //                                                                                        "CMS_scale_j_"+uncert+"_$ERA", "shape", SystMap<>::init(1.00));
-        //    
-        //    cb.cp().process(JoinStr({sig_procs, all_mc_bkgs})).channel({"mt"}).bin_id({10,11,13,14}).AddSyst(cb,
-        //                                                                                        "CMS_scale_j_"+uncert+"_$ERA", "shape", SystMap<>::init(1.00));
-        //    
-        //    cb.cp().process(JoinStr({sig_procs, all_mc_bkgs})).channel({"tt"}).bin_id({10,11,12}).AddSyst(cb,
-        //                                                                                         "CMS_scale_j_"+uncert+"_$ERA", "shape", SystMap<>::init(1.00));
-        //
-        //    cb.cp().process(JoinStr({sig_procs, all_mc_bkgs})).channel({"tt","mt","et"}).bin_id({1,2,3,4,5,6}).AddSyst(cb,
-        //                                   "CMS_scale_j_"+uncert+"_$ERA", "shape", SystMap<>::init(1.00));
-        //    cb.cp().process(JoinStr({sig_procs, all_mc_bkgs, {"QCD"}})).bin_id({1,2,3,4,5,6}).channel({"em"}).AddSyst(cb,
-        //                                   "CMS_scale_j_"+uncert+"_$ERA", "shape", SystMap<>::init(1.00));
-        //}
-        
-        
+	if (!use_jec_groupings) {
+        for (string uncert:uncertNames){
+		
+           cb.cp().process(JoinStr({sig_procs, all_mc_bkgs})).channel({"et"}).bin_id({10,11,14}).AddSyst(cb,
+                                                                                               "CMS_scale_j_"+uncert+"_$ERA", "shape", SystMap<>::init(1.00));
+		
+           cb.cp().process(JoinStr({sig_procs, all_mc_bkgs_no_TTJ})).channel({"et"}).bin_id({13}).AddSyst(cb,
+                                                                                               "CMS_scale_j_"+uncert+"_$ERA", "shape", SystMap<>::init(1.00));
+		
+           cb.cp().process(JoinStr({sig_procs, all_mc_bkgs})).channel({"mt"}).bin_id({10,11,13,14}).AddSyst(cb,
+                                                                                               "CMS_scale_j_"+uncert+"_$ERA", "shape", SystMap<>::init(1.00));
+		
+           cb.cp().process(JoinStr({sig_procs, all_mc_bkgs})).channel({"tt"}).bin_id({10,11,12}).AddSyst(cb,
+                                                                                                "CMS_scale_j_"+uncert+"_$ERA", "shape", SystMap<>::init(1.00));
+		
+           cb.cp().process(JoinStr({sig_procs, all_mc_bkgs})).channel({"tt","mt","et"}).bin_id({1,2,3,4,5,6}).AddSyst(cb,
+                                          "CMS_scale_j_"+uncert+"_$ERA", "shape", SystMap<>::init(1.00));
+           cb.cp().process(JoinStr({sig_procs, all_mc_bkgs, {"QCD"}})).bin_id({1,2,3,4,5,6}).channel({"em"}).AddSyst(cb,
+                                          "CMS_scale_j_"+uncert+"_$ERA", "shape", SystMap<>::init(1.00));
+        }
+	}
+	else {    
         // uncomment for regional JES uncertainties
-        cb.cp().process(JoinStr({sig_procs, all_mc_bkgs})).AddSyst(cb,"CMS_scale_j_eta0to5_$ERA", "shape", SystMap<>::init(1.00));
-        cb.cp().process(JoinStr({sig_procs, all_mc_bkgs})).AddSyst(cb,"CMS_scale_j_eta0to3_$ERA", "shape", SystMap<>::init(1.00));
-        cb.cp().process(JoinStr({sig_procs, all_mc_bkgs})).AddSyst(cb,"CMS_scale_j_eta3to5_$ERA", "shape", SystMap<>::init(1.00)); 
+        cb.cp().process(JoinStr({sig_procs, all_mc_bkgs})).AddSyst(cb,"CMS_scale_j_Eta0To5_$ERA", "shape", SystMap<>::init(1.00));
+        cb.cp().process(JoinStr({sig_procs, all_mc_bkgs})).AddSyst(cb,"CMS_scale_j_Eta0To3_$ERA", "shape", SystMap<>::init(1.00));
+        cb.cp().process(JoinStr({sig_procs, all_mc_bkgs})).AddSyst(cb,"CMS_scale_j_Eta3To5_$ERA", "shape", SystMap<>::init(1.00)); 
         cb.cp().process(JoinStr({sig_procs, all_mc_bkgs})).AddSyst(cb,"CMS_scale_j_RelativeBal_$ERA", "shape", SystMap<>::init(1.00));
-
-        
+		// 
+	}
+		// 
         //##############################################################################
         //  Background normalization uncertainties
         //##############################################################################
