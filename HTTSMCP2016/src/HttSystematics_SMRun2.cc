@@ -405,7 +405,7 @@ namespace ch {
         cb.cp().process({"QCD"}).channel({"mt"}).bin_id({2,13}).AddSyst(cb,
 	                                     "QCD_OSSS_boosted_$CHANNEL_$ERA", "lnN", SystMap<>::init(1.06));										 
         cb.cp().process({"QCD"}).channel({"mt"}).bin_id({3}).AddSyst(cb,
-	                                     "QCD_OSSS_dijet_lowboost_$CHANNEL_$ERA", "lnN", SystMap<>::init(1.13));       
+	                                     "QCD_OSSS_dijet_lowboost_$CHANNEL_$ERA", "lnN", SystMap<>::init(1.23));       
 		cb.cp().process({"QCD"}).channel({"mt"}).bin_id({4,16}).AddSyst(cb,
 		                                 "QCD_OSSS_dijet_boosted_$CHANNEL_$ERA", "lnN", SystMap<>::init(1.11));       
         
