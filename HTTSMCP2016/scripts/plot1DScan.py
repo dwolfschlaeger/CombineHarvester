@@ -217,7 +217,11 @@ if args.others is not None:
     for oargs in args.others:
         splitargs = oargs.split(':')
         other_scans_opts.append(splitargs)
-        other_scans.append(BuildScan(args.output, args.POI, [splitargs[0]], int(splitargs[2]), yvals, args.chop, args.remove_near_min if args.envelope is False else None, args.rezero, args.envelope,  remove_delta = args.remove_delta, improve = args.improve))
+        if args.use_html_colors:
+            other_color = ROOT.TColor.GetColor("{COLOR}".format(COLOR=splitargs[2]))
+        else:
+            other_color = int(splitargs[2])
+        other_scans.append(BuildScan(args.output, args.POI, [splitargs[0]], other_color, yvals, args.chop, args.remove_near_min if args.envelope is False else None, args.rezero, args.envelope,  remove_delta = args.remove_delta, improve = args.improve))
 
 if args.envelope:
     new_gr = ProcessEnvelope(main_scan, other_scans, args.relax_safety)
