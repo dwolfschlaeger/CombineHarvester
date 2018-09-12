@@ -74,6 +74,7 @@ int main(int argc, char** argv) {
     bool do_embedding = false;
     bool auto_rebin = false;
     bool no_jec_split = false;    
+    bool no_bbb_uncs = false;    
     bool use_jec_groupings = false;    
     bool do_jetfakes = false;
     po::variables_map vm;
@@ -95,6 +96,7 @@ int main(int argc, char** argv) {
     ("do_jetfakes", po::value<bool>(&do_jetfakes)->default_value(false))
     ("auto_rebin", po::value<bool>(&auto_rebin)->default_value(false))
     ("no_jec_split", po::value<bool>(&no_jec_split)->default_value(true))    
+    ("no_bbb_uncs", po::value<bool>(&no_bbb_uncs)->default_value(false))    
     ("use_jec_groupings", po::value<bool>(&use_jec_groupings)->default_value(false))    
     ("ttbar_fit", po::value<bool>(&ttbar_fit)->default_value(true));
 
@@ -351,7 +353,7 @@ int main(int argc, char** argv) {
     });
     
     std::vector<std::string> all_prefit_bkgs = {
-        "QCD","ZL","ZJ","ZTT","TTJ","TTT","TT",
+        "QCD","ZL","ZJ","ZLL", "ZTT","TTJ","TTT","TT",
         "W","W_rest","ZJ_rest","TTJ_rest","VVJ_rest","VV","VVT","VVJ",
         "ggH_hww125","qqH_hww125","EWKZ", "qqHsm_htt125", "qqH_htt125", "WH_htt125", "ZH_htt125"};
      
@@ -421,34 +423,35 @@ int main(int argc, char** argv) {
       
     
     ////! [part8]
-    auto bbb = ch::BinByBinFactory()
-    .SetPattern("CMS_$ANALYSIS_$BIN_$ERA_$PROCESS_bin_$#")
-    .SetAddThreshold(0.05)
-    .SetMergeThreshold(0.8)
-    .SetFixNorm(false);
-    bbb.MergeBinErrors(cb.cp().backgrounds().FilterProcs(BinIsControlRegion));
-    bbb.AddBinByBin(cb.cp().backgrounds().FilterProcs(BinIsControlRegion), cb);
-    // To be on the safe side we don't want to merge any bin uncertainties for Higgs events
-    bbb.MergeBinErrors(cb.cp().process({"qqH_htt","qqHsm_htt","qqHmm_htt","qqHps_htt","WH_htt","WHsm_htt","WHps_htt","WHmm_htt","ZH_htt","ZHsm_htt","ZHmm_htt","ZHps_htt","qqH_htt125","qqHsm_htt125","qqHmm_htt125","qqHps_htt125","WH_htt125","WHsm_htt125","WHps_htt125","WHmm_htt125","ZH_htt125","ZHsm_htt125","ZHmm_htt125","ZHps_htt125"}, false).FilterProcs(BinIsNotControlRegion));
+    if(!no_bbb_uncs) {
+        auto bbb = ch::BinByBinFactory()
+        .SetPattern("CMS_$ANALYSIS_$BIN_$ERA_$PROCESS_bin_$#")
+        .SetAddThreshold(0.05)
+        .SetMergeThreshold(0.8)
+        .SetFixNorm(false);
+        bbb.MergeBinErrors(cb.cp().backgrounds().FilterProcs(BinIsControlRegion));
+        bbb.AddBinByBin(cb.cp().backgrounds().FilterProcs(BinIsControlRegion), cb);
+        // To be on the safe side we don't want to merge any bin uncertainties for Higgs events
+        bbb.MergeBinErrors(cb.cp().process({"qqH_htt","qqHsm_htt","qqHmm_htt","qqHps_htt","WH_htt","WHsm_htt","WHps_htt","WHmm_htt","ZH_htt","ZHsm_htt","ZHmm_htt","ZHps_htt","qqH_htt125","qqHsm_htt125","qqHmm_htt125","qqHps_htt125","WH_htt125","WHsm_htt125","WHps_htt125","WHmm_htt125","ZH_htt125","ZHsm_htt125","ZHmm_htt125","ZHps_htt125"}, false).FilterProcs(BinIsNotControlRegion));
 
-    auto bbb_sig = ch::BinByBinFactory()
-    .SetPattern("CMS_$ANALYSIS_$BIN_$ERA_$PROCESS_bin_$#")
-    .SetAddThreshold(0.05)
-    .SetMergeThreshold(0.0)
-    .SetFixNorm(false);
-    bbb_sig.AddBinByBin(cb.cp().signals(), cb); 
+        auto bbb_sig = ch::BinByBinFactory()
+        .SetPattern("CMS_$ANALYSIS_$BIN_$ERA_$PROCESS_bin_$#")
+        .SetAddThreshold(0.05)
+        .SetMergeThreshold(0.0)
+        .SetFixNorm(false);
+        bbb_sig.AddBinByBin(cb.cp().signals(), cb); 
     
-    // And now do bbb for the control region with a slightly different config:
-    auto bbb_ctl = ch::BinByBinFactory()
-    .SetPattern("CMS_$ANALYSIS_$BIN_$ERA_$PROCESS_bin_$#")
-    .SetAddThreshold(0.)
-    .SetMergeThreshold(0.8)
-    .SetFixNorm(false)
-    .SetVerbosity(1);
-    // Will merge but only for non W and QCD processes, to be on the safe side
-    bbb_ctl.MergeBinErrors(cb.cp().process({"QCD", "W"}, false).FilterProcs(BinIsNotControlRegion));
-    bbb_ctl.AddBinByBin(cb.cp().process({"QCD", "W"}, false).FilterProcs(BinIsNotControlRegion), cb);
-    
+        // And now do bbb for the control region with a slightly different config:
+        auto bbb_ctl = ch::BinByBinFactory()
+        .SetPattern("CMS_$ANALYSIS_$BIN_$ERA_$PROCESS_bin_$#")
+        .SetAddThreshold(0.)
+        .SetMergeThreshold(0.8)
+        .SetFixNorm(false)
+        .SetVerbosity(1);
+        // Will merge but only for non W and QCD processes, to be on the safe side
+        bbb_ctl.MergeBinErrors(cb.cp().process({"QCD", "W"}, false).FilterProcs(BinIsNotControlRegion));
+        bbb_ctl.AddBinByBin(cb.cp().process({"QCD", "W"}, false).FilterProcs(BinIsNotControlRegion), cb);
+    }
     
     
     // This function modifies every entry to have a standardised bin name of
