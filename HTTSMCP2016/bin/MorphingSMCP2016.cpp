@@ -213,9 +213,9 @@ int main(int argc, char** argv) {
                     queue.push_back(make_pair(binid+2,cat.second+"_wjets_ss_cr"));
                     binid+=3;
                 }
-                queue.push_back(make_pair(binid,chn+"_dijet_lowboost_wjets_cr"));
+                // queue.push_back(make_pair(binid,chn+"_dijet_lowboost_wjets_cr"));
                 queue.push_back(make_pair(binid+1,chn+"_dijet_lowboost_qcd_cr"));
-                queue.push_back(make_pair(binid+2,chn+"_dijet_lowboost_wjets_ss_cr"));
+                // queue.push_back(make_pair(binid+2,chn+"_dijet_lowboost_wjets_ss_cr"));
                 queue.push_back(make_pair(binid+4,chn+"_dijet_boosted_qcd_cr")); 
                 
                 cats[chn].insert(cats[chn].end(),queue.begin(),queue.end());
